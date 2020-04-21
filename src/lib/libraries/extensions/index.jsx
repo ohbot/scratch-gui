@@ -1,6 +1,9 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
+import ohbotIconURL from './ohbot/ohbot.png';
+import ohbotInsetIconURL from './ohbot/ohbot-small.svg';
+
 import musicIconURL from './music/music.png';
 import musicInsetIconURL from './music/music-small.svg';
 
@@ -47,6 +50,26 @@ import gdxforConnectionIconURL from './gdxfor/gdxfor-illustration.svg';
 import gdxforConnectionSmallIconURL from './gdxfor/gdxfor-small.svg';
 
 export default [
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Ohbot"
+                description="Name for the 'Ohbot' extension"
+                id="gui.extension.ohbot.name"
+            />
+        ),
+        extensionId: 'ohbot',
+        iconURL: ohbotIconURL,
+        insetIconURL: ohbotInsetIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Control your Ohbot."
+                description="Description for the 'Ohbot' extension"
+                id="gui.extension.ohbot.description"
+            />
+        ),
+        featured: true
+    },
     {
         name: (
             <FormattedMessage
