@@ -56,6 +56,9 @@ export default appTarget => {
         }
     }
 
+	// Nice and clean!
+	simulateScratchDesktop = true;
+
     if (process.env.NODE_ENV === 'production' && typeof window === 'object') {
         // Warn before navigating away
         window.onbeforeunload = () => true;
@@ -67,7 +70,7 @@ export default appTarget => {
             <WrappedGui
                 canEditTitle
                 isScratchDesktop
-                showTelemetryModal
+ //             showTelemetryModal
                 canSave={false}
                 onTelemetryModalCancel={handleTelemetryModalCancel}
                 onTelemetryModalOptIn={handleTelemetryModalOptIn}
