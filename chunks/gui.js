@@ -189,15 +189,18 @@ var handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
       // note that a typo like "falsy" will be treated as true
       simulateScratchDesktop = scratchDesktopMatches[1];
     }
-  }
+  } // Nice and clean!
+
+
+  simulateScratchDesktop = true;
 
   if (false) {}
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( // important: this is checking whether `simulateScratchDesktop` is truthy, not just defined!
   simulateScratchDesktop ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WrappedGui, {
     canEditTitle: true,
-    isScratchDesktop: true,
-    showTelemetryModal: true,
+    isScratchDesktop: true //             showTelemetryModal
+    ,
     canSave: false,
     onTelemetryModalCancel: handleTelemetryModalCancel,
     onTelemetryModalOptIn: handleTelemetryModalOptIn,
