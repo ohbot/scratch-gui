@@ -72,6 +72,8 @@ import animateCharMove from './steps/animate-char-move.es.png';
 import animateCharJump from './steps/animate-char-jump.es.png';
 import animateCharChangeColor from './steps/animate-char-change-color.es.png';
 
+import ohbotTest from './steps/speech-grow-shrink.en.gif';
+
 // Tell A Story
 import storyPickBackdrop from './steps/story-pick-backdrop.gif';
 import storyPickSprite from './steps/story-pick-sprite.gif';
@@ -200,6 +202,10 @@ import talesAskAnswer from './steps/talking-13-ask-and-answer.es.png';
 
 const esImages = {
     // Intro
+    
+        // Ohbot
+    OhbotTest: ohbotTest,
+    
     introMove: introMove,
     introSayHello: introSayHello,
 

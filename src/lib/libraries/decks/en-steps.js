@@ -72,6 +72,16 @@ import animateCharMove from './steps/animate-char-move.en.gif';
 import animateCharJump from './steps/animate-char-jump.en.gif';
 import animateCharChangeColor from './steps/animate-char-change-color.en.gif';
 
+// Ohbot
+import ohbotIntro from './steps/ohbot/ohbot-intro.en.png';
+import ohbotSetMotor from './steps/ohbot/ohbot-set-motor.en.png';
+import ohbotChangeMotor from './steps/ohbot/ohbot-change-motor.en.png';
+import ohbotSaySomething from './steps/ohbot/ohbot-say-something.en.png';
+import ohbotLips from './steps/ohbot/ohbot-lips.en.png';
+import ohbotVoices from './steps/ohbot/ohbot-voices.en.png';
+import ohbotChangeColor from './steps/ohbot/ohbot-set-colour.en.png';
+import ohbotEnd from './steps/ohbot/ohbot-end.en.gif';
+
 // Tell A Story
 import storyPickBackdrop from './steps/story-pick-backdrop.gif';
 import storyPickSprite from './steps/story-pick-sprite.gif';
@@ -272,6 +282,16 @@ const enImages = {
     animateCharMove: animateCharMove,
     animateCharJump: animateCharJump,
     animateCharChangeColor: animateCharChangeColor,
+    
+    // Ohbot
+    ohbotIntro: ohbotIntro,
+    ohbotSetMotor: ohbotSetMotor,
+    ohbotChangeMotor: ohbotChangeMotor,
+    ohbotSaySomething: ohbotSaySomething,
+    ohbotLips: ohbotLips,
+    ohbotVoices: ohbotVoices,
+    ohbotChangeColor: ohbotChangeColor,
+    ohbotEnd: ohbotEnd,
 
     // Tell A Story
     storyPickBackdrop: storyPickBackdrop,
@@ -370,6 +390,8 @@ const enImages = {
     // Glide Around
     glideAroundBackAndForth: glideAroundBackAndForth,
     glideAroundPoint: glideAroundPoint,
+    
+
 
     // Code a Cartoon
     codeCartoonSaySomething: codeCartoonSaySomething,

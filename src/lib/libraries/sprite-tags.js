@@ -8,5 +8,6 @@ export default [
     {tag: 'sports', intlLabel: messages.sports},
     {tag: 'food', intlLabel: messages.food},
     {tag: 'fashion', intlLabel: messages.fashion},
-    {tag: 'letters', intlLabel: messages.letters}
+    {tag: 'letters', intlLabel: messages.letters},
+    {tag: 'ohbot', intlLabel: messages.ohbot}
 ];

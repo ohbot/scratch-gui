@@ -16,6 +16,9 @@ import libraryCartoonNetwork from './thumbnails/cartoon-network.jpg';
 import libraryAddSprite from './thumbnails/add-sprite.jpg';
 
 // Animate a name
+import ohbot from './thumbnails/ohbot.jpg';
+
+// Animate a name
 import libraryAnimate from './thumbnails/animate-a-name.jpg';
 
 // Make-Music
@@ -103,7 +106,101 @@ export default {
         ],
         urlId: 'getStarted'
     },
-
+'Ohbot': {
+        name: (
+            <FormattedMessage
+                defaultMessage="Ohbot"
+                description="Ohbot"
+                id="gui.howtos.ohbot.name"
+            />
+        ),
+        img: ohbot,
+        tags: ['ohbot'],
+        steps: [{
+            video: 's228u3g5u9'
+        },
+        {
+            title: (
+                <FormattedMessage
+                    defaultMessage="This extensions helps control a Picoh or Ohbot Robot."
+                    description="Step name for 'intro' step"
+                    id="gui.howtos.ohbot.step_intro"
+                />
+            ),
+            image: 'ohbotIntro'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Set a motor to a position 0-10."
+                    description="Step name for 'ohbotSetMotor' step"
+                    id="gui.howtos.ohbot.step_setmotor"
+                />
+            ),
+            image: 'ohbotSetMotor'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Change a motor by a value -10-10"
+                    description="Step name for 'Say Something' step"
+                    id="gui.howtos.ohbot.step_changemotor"
+                />
+            ),
+            image: 'ohbotChangeMotor'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Speak the entered text."
+                    description="Step name for 'Add Sound' step"
+                    id="gui.howtos.ohbot.step_saysomething"
+                />
+            ),
+            image: 'ohbotSaySomething'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Animate Talking"
+                    description="Step name for 'Animate Talking' step"
+                    id="gui.howtos.ohbot.step_animatetalking"
+                />
+            ),
+            image: 'ohbotLips'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Switch up languages and voices"
+                    description="Step name for 'Move Using Arrow Keys' step"
+                    id="gui.howtos.ohbot.step_voices"
+                />
+            ),
+            image: 'ohbotVoices'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Set the colour, or individual RGB values."
+                    description="Step name for 'Jump' step"
+                    id="gui.howtos.ohbot.changecolour"
+                />
+            ),
+            image: 'ohbotChangeColor'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Make something cool!"
+                    description="Step name for 'End' step"
+                    id="gui.howtos.ohbot.end"
+                />
+            ),
+            image: 'ohbotEnd'
+        }, {
+            deckIds: [
+                'Chase-Game',
+                'Tell-A-Story'
+            ]
+        }
+        ],
+        urlId: 'ohbot-start'
+    },
+    
     'imagine': {
         name: (
             <FormattedMessage
@@ -1092,6 +1189,7 @@ export default {
         ],
         urlId: 'animate-a-character'
     },
+  
 
     'Make-A-Game': {
         name: (

@@ -126,4 +126,10 @@ export default defineMessages({
         description: 'Tag for filtering a library for letters',
         id: 'gui.libraryTags.letters'
     }
+    ,
+    ohbot: {
+        defaultMessage: 'Ohbot',
+        description: 'Tag for filtering a library for ohbot',
+        id: 'gui.libraryTags.ohbot'
+    }
 });
