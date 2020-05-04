@@ -99,8 +99,8 @@ const projectData = translateFunction => {
                         bitmapResolution: 1,
                         md5ext: 'b7853f557e4426412e64bb3da6531a99.svg',
                         dataFormat: 'svg',
-                        rotationCenterX: 51,
-                        rotationCenterY: 47
+                        rotationCenterX: 109,
+                        rotationCenterY: 99
                     },
                     {
                         assetId: 'e6ddc55a6ddd9cc9d84fe0b4c21e016f',
@@ -108,8 +108,8 @@ const projectData = translateFunction => {
                         bitmapResolution: 1,
                         md5ext: 'e6ddc55a6ddd9cc9d84fe0b4c21e016f.svg',
                         dataFormat: 'svg',
-                        rotationCenterX: 51,
-                        rotationCenterY: 47
+                        rotationCenterX: 109,
+                        rotationCenterY: 99
                     }
                 ],
                 sounds: [
