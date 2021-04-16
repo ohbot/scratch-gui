@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google" value="notranslate">
-    <link rel="shortcut icon" href="static/favicon.ico">
+    <link rel="shortcut icon" href="static/icons/favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <% if (htmlWebpackPlugin.options.sentryConfig) { %>
         <!-- Sentry error logging to help with finding bugs -->
@@ -16,5 +16,119 @@
     <% } %>
   </head>
   <body>
+      
+         
+
+    
   </body>
+    <footer>
+        
+        <script>
+            const editorExtensionId = 'bfjihladgnccpchokgeeicpjcakdmkbe';
+            
+      var buildUrl = "../static/Build";
+      var loaderUrl = buildUrl + "/Build.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/Build.data",
+        frameworkUrl: buildUrl + "/Build.framework.js",
+        codeUrl: buildUrl + "/Build.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "OhbotSim",
+        productVersion: "0.1",
+      };
+
+
+      var simulationContainer = document.getElementsByClassName("stage_monitor-wrapper_2hZ-i box_box_tWy-0")[0]; 
+      
+      var buttonsContainer = document.getElementsByClassName("controls_controls-container_3ZRI_")[0]; 
+            
+      var simToggleButton = document.createElement("BUTTON");  
+      var resetButton = document.createElement("BUTTON");  
+      simToggleButton.innerHTML = '<img src="static/icons/hide.png" /> <span>Hide Simulation</span>'
+      simToggleButton.onclick = function() {toggleSimulation()}; 
+      simToggleButton.style.background =  'none';
+      simToggleButton.style.border =  'none';
+      simToggleButton.style.outline =  'none';
+      simToggleButton.style.padding =  6;     
+      
+      resetButton.innerHTML = '<img src="static/icons/reset.png" />'
+      resetButton.onclick = function() {resetSim()}; 
+      resetButton.style.background =  'none';
+      resetButton.style.border =  'none';
+      resetButton.style.outline =  'none';
+      resetButton.style.padding =  6;
+      //canvas.innerHTML = "";
+      //var loadingBar = document.querySelector("#unity-loading-bar");
+      //var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      //var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      //var mobileWarning = document.querySelector("#unity-mobile-warning");
+      //document.getElementsByClassName("stage_stage_DTWo5 box_box_tWy-0");
+      var simCanvas = document.createElement('canvas');
+      simCanvas.id     = "CursorLayer";
+      simCanvas.width  = 480;
+      simCanvas.height = 360;
+      simCanvas.style.zIndex   = 8;
+      simCanvas.style.position = "absolute";
+ 
+
+      simulationContainer.insertBefore(simCanvas, simulationContainer.firstChild);   
+            
+      
+      buttonsContainer.appendChild(resetButton);
+      buttonsContainer.appendChild(simToggleButton);
+            
+                function toggleSimulation() {
+                if (simCanvas.style.visibility == 'visible'){
+                    simCanvas.style.visibility='hidden';
+                    simToggleButton.innerHTML = '<img src="static/icons/show.png" /> <span>Show Simulation</span>'
+
+                    }
+                else
+                    {
+                      simCanvas.style.visibility='visible'; 
+                      simToggleButton.innerHTML = '<img src="static/icons/hide.png" /> <span>Hide Simulation</span>'
+
+                    }
+                }
+                function resetSim() {
+                    unityInstance.SendMessage('Ohbot', "ResetController");
+                    return new Promise((resolve, reject) => {
+			         chrome.runtime.sendMessage(editorExtensionId, "R");
+			         resolve();
+		              }).then(() => new Promise(resolve => setTimeout(resolve, 100)));
+                    } 
+          
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        //container.className = "unity-mobile";
+        config.devicePixelRatio = 1;
+        mobileWarning.style.display = "block";
+        setTimeout(() => {
+          mobileWarning.style.display = "none";
+        }, 5000);
+      } else {
+        simCanvas.style.width = "480px";
+        simCanvas.style.height = "360px";
+      }
+      //loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(simCanvas, config, (progress) => {
+          //progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          window.unityInstance = unityInstance;
+          //loadingBar.style.display = "none";
+          //fullscreenButton.onclick = () => {
+          //  unityInstance.SetFullscreen(1);
+          //};
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+
+    </footer>
 </html>
