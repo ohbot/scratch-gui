@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google" value="notranslate">
     <link rel="shortcut icon" href="static/icons/favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <% if (htmlWebpackPlugin.options.sentryConfig) { %>
-        <!-- Sentry error logging to help with finding bugs -->
-        <script src="https://cdn.ravenjs.com/3.22.1/raven.min.js" crossorigin="anonymous"></script>
-        <script>
+    <!-- Sentry error logging to help with finding bugs -->
+    <script src="https://cdn.ravenjs.com/3.22.1/raven.min.js" crossorigin="anonymous"></script>
+    <script>
             Raven.config(<%= htmlWebpackPlugin.options.sentryConfig %>).install();
-        </script>
-        <!-- /Sentry -->
+    </script>
+    <!-- /Sentry -->
     <% } %>
-  </head>
-  <body>
-      
-         
+</head>
+<body>
 
-    
-  </body>
-    <footer>
-        
-        <script>
-            const editorExtensionId = 'bfjihladgnccpchokgeeicpjcakdmkbe';
-            
-      var buildUrl = "../static/Build";
-      var loaderUrl = buildUrl + "/Build.loader.js";
-      var config = {
+
+</body>
+<footer>
+
+    <script>
+        const editorExtensionId = 'bfjihladgnccpchokgeeicpjcakdmkbe';
+        var Robot = "Picoh"
+        var buildUrl = "../static/Build";
+        var loaderUrl = buildUrl + "/Build.loader.js";
+        var config = {
         dataUrl: buildUrl + "/Build.data",
         frameworkUrl: buildUrl + "/Build.framework.js",
         codeUrl: buildUrl + "/Build.wasm",
@@ -36,99 +34,230 @@
         companyName: "DefaultCompany",
         productName: "OhbotSim",
         productVersion: "0.1",
-      };
+        };
 
+        var simulationContainer = document.getElementsByClassName("stage_monitor-wrapper_2hZ-i box_box_tWy-0")[0];
+        var simulationContainer2 = document.getElementsByClassName("stage_stage-wrapper_35Uar box_box_tWy-0")[0];
+        var buttonPanel = document.getElementsByClassName("stage-header_stage-menu-wrapper_28MSs box_box_tWy-0")[0];
+        var buttonsContainer = document.getElementsByClassName("controls_controls-container_3ZRI_")[0];
 
-      var simulationContainer = document.getElementsByClassName("stage_monitor-wrapper_2hZ-i box_box_tWy-0")[0]; 
-      
-      var buttonsContainer = document.getElementsByClassName("controls_controls-container_3ZRI_")[0]; 
+        console.log(simulationContainer2);
+        
+        const resize_ob = new ResizeObserver(function(entries) {
+            // since we are observing only a single element, so we access the first element in entries array
+            let rect = entries[0].contentRect;
+
+            // current width & height
+            let width = rect.width;
+            let height = rect.height;
+
+            console.log('Current Width : ' + width);
+            console.log('Current Height : ' + height);
             
-      var simToggleButton = document.createElement("BUTTON");  
-      var resetButton = document.createElement("BUTTON");  
-      simToggleButton.innerHTML = '<img src="static/icons/hide.png" /> <span>Hide Simulation</span>'
-      simToggleButton.onclick = function() {toggleSimulation()}; 
-      simToggleButton.style.background =  'none';
-      simToggleButton.style.border =  'none';
-      simToggleButton.style.outline =  'none';
-      simToggleButton.style.padding =  6;     
-      
-      resetButton.innerHTML = '<img src="static/icons/reset.png" />'
-      resetButton.onclick = function() {resetSim()}; 
-      resetButton.style.background =  'none';
-      resetButton.style.border =  'none';
-      resetButton.style.outline =  'none';
-      resetButton.style.padding =  6;
-      //canvas.innerHTML = "";
-      //var loadingBar = document.querySelector("#unity-loading-bar");
-      //var progressBarFull = document.querySelector("#unity-progress-bar-full");
-      //var fullscreenButton = document.querySelector("#unity-fullscreen-button");
-      //var mobileWarning = document.querySelector("#unity-mobile-warning");
-      //document.getElementsByClassName("stage_stage_DTWo5 box_box_tWy-0");
-      var simCanvas = document.createElement('canvas');
-      simCanvas.id     = "CursorLayer";
-      simCanvas.width  = 480;
-      simCanvas.height = 360;
-      simCanvas.style.zIndex   = 8;
-      simCanvas.style.position = "absolute";
- 
-
-      simulationContainer.insertBefore(simCanvas, simulationContainer.firstChild);   
+            simCanvas.width  = width;
+            simCanvas.height = height;
             
-      
-      buttonsContainer.appendChild(resetButton);
-      buttonsContainer.appendChild(simToggleButton);
+            simCanvas.style.width = width+"px";
+            simCanvas.style.height = height+"px";
+
+        });
+
+        // start observing for resize
+        resize_ob.observe(simulationContainer2);
+        
+        const resize_menu = new ResizeObserver(function(entries) {
+            // since we are observing only a single element, so we access the first element in entries array
+            let rect = entries[0].contentRect;
+
+            // current width & height
+            let width = rect.width;
+            let height = rect.height;
+
+            console.log('Current Width : ' + width);
+            console.log('Current Height : ' + height);
             
-                function toggleSimulation() {
-                if (simCanvas.style.visibility == 'visible'){
-                    simCanvas.style.visibility='hidden';
-                    simToggleButton.innerHTML = '<img src="static/icons/show.png" /> <span>Show Simulation</span>'
-
-                    }
-                else
-                    {
-                      simCanvas.style.visibility='visible'; 
-                      simToggleButton.innerHTML = '<img src="static/icons/hide.png" /> <span>Hide Simulation</span>'
-
-                    }
+            if (width<250)
+                {
+                    //robotToggleButton.style.visibility='hidden';
+                    //robotToggleButton.style.visibility='hidden';
+                    robotToggleButton.style.display ='none';
+                    robotToggleButton2.style.display='none';
+                    //simToggleButton.style.width =0;
+                    //robotToggleButton.style.width =0;
+                    //robotToggleButton2.style.width =0;
                 }
-                function resetSim() {
-                    unityInstance.SendMessage('Ohbot', "ResetController");
-                    return new Promise((resolve, reject) => {
-			         chrome.runtime.sendMessage(editorExtensionId, "R");
-			         resolve();
-		              }).then(() => new Promise(resolve => setTimeout(resolve, 100)));
-                    } 
-          
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        //container.className = "unity-mobile";
-        config.devicePixelRatio = 1;
-        mobileWarning.style.display = "block";
-        setTimeout(() => {
-          mobileWarning.style.display = "none";
-        }, 5000);
-      } else {
-        simCanvas.style.width = "480px";
-        simCanvas.style.height = "360px";
-      }
-      //loadingBar.style.display = "block";
+            else
+                {
+                    //simToggleButton.style.visibility='visible';
+                    //robotToggleButton.style.visibility='visible';
+                    //robotToggleButton2.style.visibility='visible';
+                    //simToggleButton.style.width =20;
+                    //robotToggleButton.style.width =38;
+                    //robotToggleButton2.style.width =38;
+                    
+                    robotToggleButton.style.display ='block';
+                    robotToggleButton2.style.display='block';
+                }
 
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(simCanvas, config, (progress) => {
-          //progressBarFull.style.width = 100 * progress + "%";
+        });
+        
+                // start observing for resize
+        resize_menu.observe(buttonPanel);
+        
+
+        var simToggleButton = document.createElement("BUTTON");
+        var robotToggleButton = document.createElement("BUTTON");
+        var robotToggleButton2 = document.createElement("BUTTON");
+        
+        var buttonPad =  "6px 6px 6px 6px";;
+        
+        var resetButton = document.createElement("BUTTON");
+        simToggleButton.innerHTML = '<img src="static/icons/hide.png" width="20" height="12"/>'
+        simToggleButton.onclick = function() {toggleSimulation()};
+        simToggleButton.style.background =  'none';
+        simToggleButton.style.border =  'none';
+        simToggleButton.style.outline =  'none';
+        simToggleButton.style.padding =  buttonPad;
+        
+        
+        robotToggleButton.innerHTML = '<img src="static/icons/OhbotLogob.png" width="38" height="20"/>'
+        robotToggleButton.onclick = function() {toggleOhbot()};
+        robotToggleButton.style.background =  'none';
+        robotToggleButton.style.border =  'none';
+        robotToggleButton.style.outline =  'none';
+        robotToggleButton.style.padding =  buttonPad;        
+        robotToggleButton.style.overflow = "hidden";        
+        
+        robotToggleButton2.innerHTML = '<img src="static/icons/PicohLogoPixels.png" width="38" height="20" />'
+        robotToggleButton2.onclick = function() {togglePicoh()};
+        robotToggleButton2.style.background =  'none';
+        robotToggleButton2.style.border =  'none';
+        robotToggleButton2.style.outline =  'none';
+        robotToggleButton2.style.padding =  buttonPad;
+
+        resetButton.innerHTML = '<img src="static/icons/reset.png" width="24" height="20" />'
+        resetButton.onclick = function() {resetSim()};
+        resetButton.style.background =  'none';
+        resetButton.style.border =  'none';
+        resetButton.style.outline =  'none';
+        resetButton.style.padding =  buttonPad;
+
+        var simCanvas = document.createElement('canvas');
+        simCanvas.id     = "CursorLayer";
+        simCanvas.width  = 480;
+        simCanvas.height = 360;
+        simCanvas.style.zIndex   = 8;
+        simCanvas.style.position = "absolute";
+        simCanvas.style.visibility = 'visible';
+
+        simulationContainer.insertBefore(simCanvas, simulationContainer.firstChild);
+
+        buttonsContainer.appendChild(resetButton);
+        buttonsContainer.appendChild(robotToggleButton2);
+        buttonsContainer.appendChild(robotToggleButton);
+        
+        buttonsContainer.appendChild(simToggleButton);
+
+        function toggleSimulation() {
+
+        if (simCanvas.style.visibility == 'visible'){
+            simCanvas.style.visibility='hidden';
+            simToggleButton.innerHTML = '<img src="static/icons/show.png" width="20" height="12"/>'
+          }
+        else
+          {
+            simCanvas.style.visibility='visible';
+            simToggleButton.innerHTML = '<img src="static/icons/hide.png" width="20" height="12"/>'
+          }
+        }
+
+        function resetSim() {
+            unityInstance.SendMessage(Robot, "ResetController");
+            return new Promise((resolve, reject) => {
+            chrome.runtime.sendMessage(editorExtensionId, "R");
+			resolve();
+		    }).then(() => new Promise(resolve => setTimeout(resolve, 100)));
+        }        
+        
+        function resizeSim() {
+            console.log(simContainer2.width);
+            simCanvas.width = simContainer2.width;
+            simCanvas.height = simContainer2.height;
+            
+        }        
+        function toggleOhbot() {
+        
+        Robot = 'Ohbot';
+        robotToggleButton2.innerHTML = '<img src="static/icons/PicohLogoPixelsb.png" width="38" height="20">'
+        robotToggleButton.innerHTML = '<img src="static/icons/OhbotLogo.png" width="38" height="20">'
+        unityInstance.SendMessage('CameraHolder', "Show"+Robot);
+            
+        }
+        
+        function togglePicoh() {
+        
+        Robot = 'Picoh';
+            
+        robotToggleButton2.innerHTML = '<img src="static/icons/PicohLogoPixels.png" width="38" height="20">'
+        robotToggleButton.innerHTML = '<img src="static/icons/OhbotLogob.png" width="38" height="20">'
+        unityInstance.SendMessage('CameraHolder', "Show"+Robot);
+            
+        }
+           
+        function smallSimSize() {
+            simCanvas.width  = 240;
+            simCanvas.height = 180;
+            simCanvas.style.width = "240px";
+            simCanvas.style.height = "180px";
+        }
+        function normalSimSize() {
+            simCanvas.width  = 480;
+            simCanvas.height = 360;
+            simCanvas.style.width = "480px";
+            simCanvas.style.height = "360px";
+        }
+
+        function fullscreenSimSize() {
+            simCanvas.width  = 2456;
+            simCanvas.height = 1842;
+            simCanvas.style.width = "2456px";
+            simCanvas.style.height = "1842px";
+            simToggleButton.innerHTML = 'Bobcat'
+            console.log("hello")
+        }
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            //container.className = "unity-mobile";
+            config.devicePixelRatio = 1;
+            mobileWarning.style.display = "block";
+            setTimeout(() => {
+            mobileWarning.style.display = "none";
+            }, 5000);
+        }
+        else {
+            simCanvas.style.width = "480px";
+            simCanvas.style.height = "360px";
+        }
+        //loadingBar.style.display = "block";
+
+        var script = document.createElement("script");
+        script.src = loaderUrl;
+        script.onload = () => {
+            createUnityInstance(simCanvas, config, (progress) => {
+            //progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
-          window.unityInstance = unityInstance;
-          //loadingBar.style.display = "none";
-          //fullscreenButton.onclick = () => {
-          //  unityInstance.SetFullscreen(1);
-          //};
+            window.unityInstance = unityInstance;
+            //loadingBar.style.display = "none";
+            //fullscreenButton.onclick = () => {
+            //  unityInstance.SetFullscreen(1);
+            //};
         }).catch((message) => {
           alert(message);
         });
-      };
-      document.body.appendChild(script);
+        };
+
+        document.body.appendChild(script);
     </script>
 
-    </footer>
+</footer>
 </html>
