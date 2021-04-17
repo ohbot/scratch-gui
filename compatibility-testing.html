@@ -34,7 +34,7 @@
         var buttonPanel = document.getElementsByClassName("stage-header_stage-menu-wrapper_28MSs box_box_tWy-0")[0];
         var buttonsContainer = document.getElementsByClassName("controls_controls-container_3ZRI_")[0];
 
-        console.log(simulationContainer2);
+        //console.log(simulationContainer2);
         
         const resize_ob = new ResizeObserver(function(entries) {
             // since we are observing only a single element, so we access the first element in entries array
@@ -44,8 +44,8 @@
             let width = rect.width;
             let height = rect.height;
 
-            console.log('Current Width : ' + width);
-            console.log('Current Height : ' + height);
+            //console.log('Current Width : ' + width);
+            //console.log('Current Height : ' + height);
             
             simCanvas.width  = width;
             simCanvas.height = height;
@@ -66,8 +66,8 @@
             let width = rect.width;
             let height = rect.height;
 
-            console.log('Current Width : ' + width);
-            console.log('Current Height : ' + height);
+            //console.log('Current Width : ' + width);
+            //console.log('Current Height : ' + height);
             
             if (width<250)
                 {
@@ -75,6 +75,7 @@
                     //robotToggleButton.style.visibility='hidden';
                     robotToggleButton.style.display ='none';
                     robotToggleButton2.style.display='none';
+                    muteButton.style.display='none';
                     //simToggleButton.style.width =0;
                     //robotToggleButton.style.width =0;
                     //robotToggleButton2.style.width =0;
@@ -87,7 +88,7 @@
                     //simToggleButton.style.width =20;
                     //robotToggleButton.style.width =38;
                     //robotToggleButton2.style.width =38;
-                    
+                    muteButton.style.display='block';
                     robotToggleButton.style.display ='block';
                     robotToggleButton2.style.display='block';
                 }
@@ -101,8 +102,11 @@
         var simToggleButton = document.createElement("BUTTON");
         var robotToggleButton = document.createElement("BUTTON");
         var robotToggleButton2 = document.createElement("BUTTON");
+        var muteButton = document.createElement("BUTTON");
         
-        var buttonPad =  "6px 6px 6px 6px";;
+        var mute = 1;
+        
+        var buttonPad =  "6px 6px 6px 6px";
         
         var resetButton = document.createElement("BUTTON");
         simToggleButton.innerHTML = '<img src="static/icons/hide.png" width="20" height="12"/>'
@@ -119,14 +123,13 @@
         robotToggleButton.style.border =  'none';
         robotToggleButton.style.outline =  'none';
         robotToggleButton.style.padding =  buttonPad;        
-        robotToggleButton.style.overflow = "hidden";        
         
         robotToggleButton2.innerHTML = '<img src="static/icons/PicohLogoPixels.png" width="38" height="20" />'
         robotToggleButton2.onclick = function() {togglePicoh()};
         robotToggleButton2.style.background =  'none';
         robotToggleButton2.style.border =  'none';
         robotToggleButton2.style.outline =  'none';
-        robotToggleButton2.style.padding =  buttonPad;
+        robotToggleButton2.style.padding =  "6px 6px 6px 55px";
 
         resetButton.innerHTML = '<img src="static/icons/reset.png" width="24" height="20" />'
         resetButton.onclick = function() {resetSim()};
@@ -134,6 +137,13 @@
         resetButton.style.border =  'none';
         resetButton.style.outline =  'none';
         resetButton.style.padding =  buttonPad;
+        
+        muteButton.innerHTML = '<img src="static/icons/unmute.png" width="24" height="20" />'
+        muteButton.onclick = function() {muteToggle()};
+        muteButton.style.background =  'none';
+        muteButton.style.border =  'none';
+        muteButton.style.outline =  'none';
+        muteButton.style.padding =  buttonPad;
 
         var simCanvas = document.createElement('canvas');
         simCanvas.id     = "CursorLayer";
@@ -150,18 +160,42 @@
         buttonsContainer.appendChild(robotToggleButton);
         
         buttonsContainer.appendChild(simToggleButton);
+        
+        buttonsContainer.appendChild(muteButton);
 
         function toggleSimulation() {
 
         if (simCanvas.style.visibility == 'visible'){
             simCanvas.style.visibility='hidden';
             simToggleButton.innerHTML = '<img src="static/icons/show.png" width="20" height="12"/>'
+            muteButton.innerHTML = '<img src="static/icons/mute.png" width="24" height="20"/>'
+            mute = 0;
+            unityInstance.SendMessage("CameraHolder", "Pause");
           }
         else
           {
             simCanvas.style.visibility='visible';
             simToggleButton.innerHTML = '<img src="static/icons/hide.png" width="20" height="12"/>'
+            muteButton.innerHTML = '<img src="static/icons/unmute.png" width="24" height="20"/>'
+            mute = 1;
+            unityInstance.SendMessage("CameraHolder", "Resume");
           }
+          unityInstance.SendMessage("CameraHolder", "SetMute",parseInt(mute));
+        }
+        
+        function muteToggle() {
+
+        if (mute == 0){
+            muteButton.innerHTML = '<img src="static/icons/unmute.png" width="24" height="20"/>'
+            mute = 1;
+          }
+        else
+          {
+            muteButton.innerHTML = '<img src="static/icons/mute.png" width="24" height="20"/>'
+            mute = 0;
+          }
+          unityInstance.SendMessage("CameraHolder", "SetMute",parseInt(mute));
+
         }
 
         function resetSim() {
@@ -173,7 +207,7 @@
         }        
         
         function resizeSim() {
-            console.log(simContainer2.width);
+            //console.log(simContainer2.width);
             simCanvas.width = simContainer2.width;
             simCanvas.height = simContainer2.height;
             
@@ -231,8 +265,21 @@
             simCanvas.style.width = "480px";
             simCanvas.style.height = "360px";
         }
+        
+        function enableUnityInput()
+        {
+            console.log('Unity input')
+        }        
+        
+        function disableUnityInput()
+        {
+            console.log('Unity no input')
+        }
+        
         //loadingBar.style.display = "block";
-
+        simCanvas.addEventListener("focus", enableUnityInput);
+        
+        simCanvas.addEventListener("focusout", disableUnityInput);
         var script = document.createElement("script");
         script.src = loaderUrl;
         script.onload = () => {
