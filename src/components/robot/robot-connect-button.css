@@ -1,0 +1,196 @@
+.robot-controls {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    position: relative;
+    white-space: nowrap;
+}
+
+.robot-action-group {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.35rem;
+    margin-left: 0.25rem;
+}
+
+.robot-button {
+    align-items: center;
+    background: linear-gradient(180deg, #ffffff 0%, #eef4ff 100%);
+    border: 1px solid rgba(78, 115, 255, 0.25);
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 18px rgba(19, 37, 89, 0.12);
+    color: #1b2a57;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    height: 2rem;
+    justify-content: center;
+    letter-spacing: 0.1em;
+    min-width: 7.5rem;
+    padding: 0 0.75rem;
+    text-transform: uppercase;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.robot-button:hover {
+    background: linear-gradient(180deg, #ffffff 0%, #e4eeff 100%);
+    border-color: rgba(78, 115, 255, 0.45);
+    box-shadow: 0 10px 24px rgba(19, 37, 89, 0.16);
+    transform: translateY(-1px);
+}
+
+.robot-button:disabled {
+    cursor: default;
+    opacity: 0.6;
+    transform: none;
+}
+
+.robot-buttonConnected {
+    background: linear-gradient(180deg, #effff4 0%, #dbfae7 100%);
+    border-color: rgba(30, 181, 91, 0.35);
+    color: #0d6b33;
+}
+
+.robot-buttonConnecting {
+    background: linear-gradient(180deg, #fff8e8 0%, #ffefc8 100%);
+    border-color: rgba(245, 158, 11, 0.45);
+    color: #8a5a00;
+}
+
+.robot-menu-button {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 0.5rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    gap: 0.45rem;
+    height: 2rem;
+    justify-content: center;
+    letter-spacing: 0.12em;
+    min-width: 7.25rem;
+    padding: 0 1rem;
+    text-transform: uppercase;
+    transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.robot-menu-button:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 6px 16px rgba(12, 26, 64, 0.18);
+    transform: translateY(-1px);
+}
+
+.robot-menu-icon {
+    display: block;
+    height: 1.15rem;
+    width: 1.15rem;
+}
+
+.robot-menu {
+    position: absolute;
+    top: calc(100% + 0.45rem);
+    right: 0;
+    width: 20rem;
+    background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+    border: 1px solid rgba(78, 115, 255, 0.18);
+    border-radius: 0.9rem;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+    padding: 0.95rem;
+    z-index: 20;
+}
+
+.robot-menu-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.robot-menu-label {
+    color: #7c86a3;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.robot-menu-value {
+    color: #1b2a57;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-top: 0.15rem;
+}
+
+.robot-status-dot {
+    background: #cbd5e1;
+    border-radius: 999px;
+    display: block;
+    height: 0.65rem;
+    width: 0.65rem;
+}
+
+.robot-status-dotConnected {
+    background: #22c55e;
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12);
+}
+
+.robot-menu-stats {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-bottom: 0.75rem;
+}
+
+.robot-connect-row {
+    display: flex;
+    margin-bottom: 0.75rem;
+}
+
+.robot-stat-card {
+    background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+    border: 1px solid rgba(78, 115, 255, 0.1);
+    border-radius: 0.7rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    padding: 0.65rem 0.75rem;
+}
+
+.robot-motor-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.robot-motor-badge {
+    background: #fff7ec;
+    border: 1px solid #ffd7a8;
+    border-radius: 999px;
+    color: #9a4a16;
+    font-size: 0.66rem;
+    font-weight: 700;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0.3rem 0.55rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.robot-motor-badgeAttached {
+    background: #ecfdf3;
+    border-color: #9fe3b4;
+    color: #166534;
+}
+
+.robot-empty-state {
+    color: #5f6d8d;
+    font-size: 0.75rem;
+    line-height: 1.4;
+}

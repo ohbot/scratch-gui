@@ -10,6 +10,8 @@ import TargetHighlight from '../../containers/target-highlight.jsx';
 import GreenFlagOverlay from '../../containers/green-flag-overlay.jsx';
 import Question from '../../containers/question.jsx';
 import MicIndicator from '../mic-indicator/mic-indicator.jsx';
+import UnityPlayer from '../simulator/unity-player.jsx';
+import VM from 'scratch-vm';
 import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants.js';
 import {getStageDimensions} from '../../lib/screen-utils.js';
 import styles from './stage.css';
@@ -26,6 +28,7 @@ const StageComponent = props => {
         question,
         stageSize,
         useEditorDragStyle,
+        vm,
         onDeactivateColorPicker,
         onDoubleClick,
         onQuestionAnswered,
@@ -73,6 +76,11 @@ const StageComponent = props => {
                         stageSize={stageDimensions}
                     />
                 </Box>
+                <UnityPlayer
+                    height={stageDimensions.height}
+                    vm={vm}
+                    width={stageDimensions.width}
+                />
                 <Box className={styles.frameWrapper}>
                     <TargetHighlight
                         className={styles.frame}
@@ -147,7 +155,8 @@ StageComponent.propTypes = {
     onQuestionAnswered: PropTypes.func,
     question: PropTypes.string,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
-    useEditorDragStyle: PropTypes.bool
+    useEditorDragStyle: PropTypes.bool,
+    vm: PropTypes.instanceOf(VM).isRequired
 };
 StageComponent.defaultProps = {
     dragRef: () => {}

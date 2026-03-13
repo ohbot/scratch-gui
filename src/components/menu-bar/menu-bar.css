@@ -91,6 +91,15 @@
     flex: 1;
 }
 
+.robot-controls-slot {
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;
+    margin-left: 0.75rem;
+    padding-right: 0.75rem;
+    min-width: 0;
+}
+
 .title-field-growable {
     flex-grow: 1;
     width: 2rem;
@@ -155,6 +164,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .account-info-group .menu-bar-item {

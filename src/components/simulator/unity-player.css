@@ -1,0 +1,11 @@
+.unity-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    visibility: visible;
+}
+
+.unity-canvas-hidden {
+    visibility: hidden;
+}

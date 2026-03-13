@@ -1,0 +1,8 @@
+.sim-button {
+    background: none;
+    border: none;
+    outline: none;
+    padding: 6px;
+    cursor: pointer;
+    display: block;
+}

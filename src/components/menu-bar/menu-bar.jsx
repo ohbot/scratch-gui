@@ -29,6 +29,8 @@ import SB3Downloader from '../../containers/sb3-downloader.jsx';
 import DeletionRestorer from '../../containers/deletion-restorer.jsx';
 import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
+import SimulationControls from '../simulator/simulation-controls.jsx';
+import EmbeddedRobotController from '../robot/embedded-robot-controller.jsx';
 
 import {openTipsLibrary} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
@@ -688,7 +690,14 @@ class MenuBar extends React.Component {
                             ) : []}
                         </React.Fragment>
                     )}
+                    <div className={styles.robotControlsSlot}>
+                        <SimulationControls
+                            robotMenuOnly
+                            vm={this.props.vm}
+                        />
+                    </div>
                 </div>
+                <EmbeddedRobotController vm={this.props.vm} />
             </Box>
         );
     }

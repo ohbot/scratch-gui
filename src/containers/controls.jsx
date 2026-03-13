@@ -31,7 +31,7 @@ class Controls extends React.Component {
     }
     render () {
         const {
-            vm, // eslint-disable-line no-unused-vars
+            vm,
             isStarted, // eslint-disable-line no-unused-vars
             projectRunning,
             turbo,
@@ -42,6 +42,7 @@ class Controls extends React.Component {
                 {...props}
                 active={projectRunning}
                 turbo={turbo}
+                vm={vm}
                 onGreenFlagClick={this.handleGreenFlagClick}
                 onStopAllClick={this.handleStopAllClick}
             />

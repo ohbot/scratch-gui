@@ -2,10 +2,12 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import VM from 'scratch-vm';
 
 import GreenFlag from '../green-flag/green-flag.jsx';
 import StopAll from '../stop-all/stop-all.jsx';
 import TurboMode from '../turbo-mode/turbo-mode.jsx';
+import SimulationControls from '../simulator/simulation-controls.jsx';
 
 import styles from './controls.css';
 
@@ -30,6 +32,7 @@ const Controls = function (props) {
         onGreenFlagClick,
         onStopAllClick,
         turbo,
+        vm,
         ...componentProps
     } = props;
     return (
@@ -50,6 +53,7 @@ const Controls = function (props) {
             {turbo ? (
                 <TurboMode />
             ) : null}
+            <SimulationControls vm={vm} />
         </div>
     );
 };
@@ -60,7 +64,8 @@ Controls.propTypes = {
     intl: intlShape.isRequired,
     onGreenFlagClick: PropTypes.func.isRequired,
     onStopAllClick: PropTypes.func.isRequired,
-    turbo: PropTypes.bool
+    turbo: PropTypes.bool,
+    vm: PropTypes.instanceOf(VM)
 };
 
 Controls.defaultProps = {
