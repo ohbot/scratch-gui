@@ -46,6 +46,7 @@ class TargetPane extends React.Component {
             'handlePaintSpriteClick',
             'handleFileUploadClick',
             'handleSpriteUpload',
+            'syncRobotSpriteVisibility',
             'setFileInput'
         ]);
     }
@@ -98,8 +99,24 @@ class TargetPane extends React.Component {
             downloadBlob(`${spriteName}.sprite3`, content);
         });
     }
+    syncRobotSpriteVisibility (selectedTarget) {
+        if (!selectedTarget || selectedTarget.isStage || !selectedTarget.sprite) return;
+        const selectedName = selectedTarget.sprite.name;
+        if (selectedName !== 'Ohbot' && selectedName !== 'Picoh') return;
+        this.props.vm.runtime.targets.forEach(target => {
+            if (!target || target.isStage || !target.sprite) return;
+            if (target.sprite.name !== 'Ohbot' && target.sprite.name !== 'Picoh') return;
+            target.postSpriteInfo({
+                visible: target.id === selectedTarget.id
+            });
+        });
+        this.props.vm.setEditingTarget(selectedTarget.id);
+        this.props.vm.runtime.emit('SIM_SET_ROBOT', selectedName);
+    }
     handleSelectSprite (id) {
         this.props.vm.setEditingTarget(id);
+        const target = this.props.vm.runtime.getTargetById(id);
+        this.syncRobotSpriteVisibility(target);
         if (this.props.stage && id !== this.props.stage.id) {
             this.props.onHighlightTarget(id);
         }

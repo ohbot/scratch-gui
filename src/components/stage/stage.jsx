@@ -69,6 +69,11 @@ const StageComponent = props => {
                         }}
                         {...boxProps}
                     />
+                    <UnityPlayer
+                        height={stageDimensions.height}
+                        vm={vm}
+                        width={stageDimensions.width}
+                    />
                 </Box>
                 <Box className={styles.monitorWrapper}>
                     <MonitorList
@@ -76,11 +81,6 @@ const StageComponent = props => {
                         stageSize={stageDimensions}
                     />
                 </Box>
-                <UnityPlayer
-                    height={stageDimensions.height}
-                    vm={vm}
-                    width={stageDimensions.width}
-                />
                 <Box className={styles.frameWrapper}>
                     <TargetHighlight
                         className={styles.frame}

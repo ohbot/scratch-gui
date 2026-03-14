@@ -12,6 +12,7 @@ class SimulationControls extends React.Component {
         super(props);
         bindAll(this, [
             'handleDocumentMouseDown',
+            'handleSetRobot',
             'handleRobotStatus',
             'handleToggleMenu',
             'handleToggleConnection',
@@ -20,6 +21,7 @@ class SimulationControls extends React.Component {
             'handleTogglePicoh',
             'handleMuteToggle',
             'handleReset',
+            'syncStageRobotVisibility',
             'setActiveRobot'
         ]);
         this.state = {
@@ -39,6 +41,7 @@ class SimulationControls extends React.Component {
     componentDidMount () {
         if (this.props.vm) {
             this.props.vm.runtime.on('ROBOT_CONNECTION_STATUS', this.handleRobotStatus);
+            this.props.vm.runtime.on('SIM_SET_ROBOT', this.handleSetRobot);
         }
         document.addEventListener('mousedown', this.handleDocumentMouseDown, true);
         document.addEventListener('touchstart', this.handleDocumentMouseDown, true);
@@ -46,6 +49,7 @@ class SimulationControls extends React.Component {
     componentWillUnmount () {
         if (this.props.vm) {
             this.props.vm.runtime.removeListener('ROBOT_CONNECTION_STATUS', this.handleRobotStatus);
+            this.props.vm.runtime.removeListener('SIM_SET_ROBOT', this.handleSetRobot);
         }
         document.removeEventListener('mousedown', this.handleDocumentMouseDown, true);
         document.removeEventListener('touchstart', this.handleDocumentMouseDown, true);
@@ -65,11 +69,39 @@ class SimulationControls extends React.Component {
             this.props.vm.runtime.emit('SIM_COMMAND', command);
         }
     }
+    syncStageRobotVisibility (activeRobot) {
+        if (!this.props.vm || !this.props.vm.runtime) return;
+        let activeTargetId = null;
+        const spriteTargets = this.props.vm.runtime.targets.filter(target =>
+            target && !target.isStage && target.sprite && (
+                target.sprite.name === 'Ohbot' || target.sprite.name === 'Picoh'
+            )
+        );
+        spriteTargets.forEach(target => {
+            target.postSpriteInfo({
+                visible: target.sprite.name === activeRobot
+            });
+            if (target.sprite.name === activeRobot) {
+                activeTargetId = target.id;
+            }
+        });
+        if (activeTargetId) {
+            this.props.vm.setEditingTarget(activeTargetId);
+        } else {
+            this.props.vm.emitTargetsUpdate(false);
+        }
+    }
     setActiveRobot (robot) {
         this.setState({robot: robot});
+        this.syncStageRobotVisibility(robot);
         this.emitSimCommand('CameraHolder', 'ShowRobot', robot);
         if (this.props.vm) {
             this.props.vm.runtime.emit('SIM_SET_ROBOT', robot);
+        }
+    }
+    handleSetRobot (robot) {
+        if (robot === 'Ohbot' || robot === 'Picoh') {
+            this.setState({robot: robot});
         }
     }
     handleRobotStatus (status) {
@@ -102,9 +134,6 @@ class SimulationControls extends React.Component {
             this.props.vm.runtime.emit('ROBOT_TOGGLE_CONNECTION');
         }
     }
-    getUnityCanvas () {
-        return document.getElementById('CursorLayer');
-    }
     handleToggleSimulation () {
         const newVisible = !this.state.simVisible;
         const newMuted = !newVisible;
@@ -112,9 +141,8 @@ class SimulationControls extends React.Component {
             simVisible: newVisible,
             muted: newMuted
         });
-        const canvas = this.getUnityCanvas();
-        if (canvas) {
-            canvas.style.visibility = newVisible ? 'visible' : 'hidden';
+        if (this.props.vm) {
+            this.props.vm.runtime.emit('SIM_SET_VISIBILITY', newVisible);
         }
         if (newVisible) {
             this.emitSimCommand('CameraHolder', 'Resume');
@@ -190,33 +218,41 @@ class SimulationControls extends React.Component {
                     </button>
                     {menuOpen ? (
                         <div className={robotButtonStyles.robotMenu}>
-                            <div className={robotButtonStyles.robotMenuHeader}>
-                                <div>
-                                    <div className={robotButtonStyles.robotMenuLabel}>{'Status'}</div>
-                                    <div className={robotButtonStyles.robotMenuValue}>
-                                        {connected ? `${robot} online` : 'Offline'}
-                                    </div>
+                            <div className={robotButtonStyles.robotMenuTitleRow}>
+                                <div className={robotButtonStyles.robotMenuTitle}>{'Robot'}</div>
+                                <div className={robotButtonStyles.robotMenuState}>
+                                    {isConnecting ? 'Connecting' : connected ? robot : 'Offline'}
                                 </div>
-                                <div
-                                    className={[
-                                        robotButtonStyles.robotStatusDot,
-                                        connected ? robotButtonStyles.robotStatusDotConnected : ''
-                                    ].join(' ')}
-                                />
                             </div>
-                            <div className={robotButtonStyles.robotConnectRow}>
-                                <button
-                                    className={[
-                                        robotButtonStyles.robotButton,
-                                        connected ? robotButtonStyles.robotButtonConnected : '',
-                                        isConnecting ? robotButtonStyles.robotButtonConnecting : ''
-                                    ].join(' ')}
-                                    disabled={isConnecting}
-                                    onClick={this.handleToggleConnection}
-                                    title={connected ? 'Disconnect robot' : 'Connect robot'}
-                                >
-                                    {isConnecting ? 'Connecting...' : connected ? robot : 'Connect Robot'}
-                                </button>
+                            <div className={robotButtonStyles.robotTopRow}>
+                                <div className={robotButtonStyles.robotMenuHeader}>
+                                    <div>
+                                        <div className={robotButtonStyles.robotMenuLabel}>{'Status'}</div>
+                                        <div className={robotButtonStyles.robotMenuValue}>
+                                            {connected ? `${robot} online` : 'Offline'}
+                                        </div>
+                                    </div>
+                                    <div
+                                        className={[
+                                            robotButtonStyles.robotStatusDot,
+                                            connected ? robotButtonStyles.robotStatusDotConnected : ''
+                                        ].join(' ')}
+                                    />
+                                </div>
+                                <div className={robotButtonStyles.robotConnectRow}>
+                                    <button
+                                        className={[
+                                            robotButtonStyles.robotButton,
+                                            connected ? robotButtonStyles.robotButtonConnected : '',
+                                            isConnecting ? robotButtonStyles.robotButtonConnecting : ''
+                                        ].join(' ')}
+                                        disabled={isConnecting}
+                                        onClick={this.handleToggleConnection}
+                                        title={connected ? 'Disconnect robot' : 'Connect robot'}
+                                    >
+                                        {isConnecting ? 'Connecting...' : connected ? robot : 'Connect Robot'}
+                                    </button>
+                                </div>
                             </div>
                             <div className={robotButtonStyles.robotMenuStats}>
                                 <div className={robotButtonStyles.robotStatCard}>
@@ -233,6 +269,12 @@ class SimulationControls extends React.Component {
                                         {robot === 'Picoh' ? shapeCount : 'N/A'}
                                     </div>
                                 </div>
+                            </div>
+                            <div className={robotButtonStyles.robotSectionHeader}>
+                                <span className={robotButtonStyles.robotMenuLabel}>{'Motors'}</span>
+                                <span className={robotButtonStyles.robotSectionMeta}>
+                                    {visibleMotorIndices.length || 0}
+                                </span>
                             </div>
                             {visibleMotorIndices.length ? (
                                 <div className={robotButtonStyles.robotMotorGrid}>
@@ -252,7 +294,7 @@ class SimulationControls extends React.Component {
                                 </div>
                             ) : (
                                 <div className={robotButtonStyles.robotEmptyState}>
-                                    {'Connect a robot to load motor definitions.'}
+                                    {'No motors available'}
                                 </div>
                             )}
                         </div>
@@ -282,22 +324,6 @@ class SimulationControls extends React.Component {
                 {compact ? null : (
                     <button
                         className={styles.simButton}
-                        onClick={this.handleTogglePicoh}
-                    >
-                        <img
-                            alt="Picoh"
-                            height="20"
-                            src={robot === 'Picoh' ?
-                                'static/icons/PicohLogoPixels.png' :
-                                'static/icons/PicohLogoPixelsb.png'
-                            }
-                            width="38"
-                        />
-                    </button>
-                )}
-                {compact ? null : (
-                    <button
-                        className={styles.simButton}
                         onClick={this.handleToggleOhbot}
                     >
                         <img
@@ -306,6 +332,22 @@ class SimulationControls extends React.Component {
                             src={robot === 'Ohbot' ?
                                 'static/icons/OhbotLogo.png' :
                                 'static/icons/OhbotLogob.png'
+                            }
+                            width="38"
+                        />
+                    </button>
+                )}
+                {compact ? null : (
+                    <button
+                        className={styles.simButton}
+                        onClick={this.handleTogglePicoh}
+                    >
+                        <img
+                            alt="Picoh"
+                            height="20"
+                            src={robot === 'Picoh' ?
+                                'static/icons/PicohLogoPixels.png' :
+                                'static/icons/PicohLogoPixelsb.png'
                             }
                             width="38"
                         />

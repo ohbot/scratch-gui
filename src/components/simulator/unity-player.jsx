@@ -1,6 +1,7 @@
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
+import classNames from 'classnames';
 import VM from 'scratch-vm';
 
 import styles from './unity-player.css';
@@ -22,6 +23,7 @@ class UnityPlayer extends React.Component {
         bindAll(this, [
             'handleSimCommand',
             'handleSetRobot',
+            'handleSetVisibility',
             'setCanvasRef',
             'setWrapperRef'
         ]);
@@ -30,6 +32,9 @@ class UnityPlayer extends React.Component {
         this.resizeObserver = null;
         this.unityInstance = null;
         this.robot = 'Ohbot';
+        this.state = {
+            visible: true
+        };
     }
     componentDidMount () {
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
@@ -42,6 +47,7 @@ class UnityPlayer extends React.Component {
         if (this.props.vm) {
             this.props.vm.runtime.on('SIM_COMMAND', this.handleSimCommand);
             this.props.vm.runtime.on('SIM_SET_ROBOT', this.handleSetRobot);
+            this.props.vm.runtime.on('SIM_SET_VISIBILITY', this.handleSetVisibility);
         }
     }
     componentWillUnmount () {
@@ -51,6 +57,7 @@ class UnityPlayer extends React.Component {
         if (this.props.vm) {
             this.props.vm.runtime.removeListener('SIM_COMMAND', this.handleSimCommand);
             this.props.vm.runtime.removeListener('SIM_SET_ROBOT', this.handleSetRobot);
+            this.props.vm.runtime.removeListener('SIM_SET_VISIBILITY', this.handleSetVisibility);
         }
         this.unityInstance = null;
     }
@@ -75,6 +82,12 @@ class UnityPlayer extends React.Component {
     }
     handleSetRobot (robot) {
         this.robot = robot;
+        if (this.unityInstance) {
+            this.unityInstance.SendMessage('CameraHolder', 'ShowRobot', robot);
+        }
+    }
+    handleSetVisibility (visible) {
+        this.setState({visible: visible});
     }
     setupResizeObserver () {
         if (!this.wrapperRef || !this.canvasRef) return;
@@ -111,14 +124,15 @@ class UnityPlayer extends React.Component {
     render () {
         return (
             <div
+                className={classNames(
+                    styles.unityWrapper,
+                    {[styles.unityWrapperHidden]: !this.state.visible}
+                )}
                 ref={this.setWrapperRef}
                 style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
                     width: '100%',
                     height: '100%',
-                    pointerEvents: 'none'
+                    visibility: this.state.visible ? 'visible' : 'hidden'
                 }}
             >
                 <canvas
@@ -126,10 +140,6 @@ class UnityPlayer extends React.Component {
                     height={this.props.height}
                     id="CursorLayer"
                     ref={this.setCanvasRef}
-                    style={{
-                        width: `${this.props.width}px`,
-                        height: `${this.props.height}px`
-                    }}
                     width={this.props.width}
                 />
             </div>

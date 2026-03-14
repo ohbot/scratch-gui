@@ -8,6 +8,7 @@
         of the element, which messes up the chrome padding consistency
     */
     display: block;
+    position: relative;
 
     border-radius: $space;
     border: $stage-standard-border-width solid $ui-black-transparent;

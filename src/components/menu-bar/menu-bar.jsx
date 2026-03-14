@@ -322,7 +322,10 @@ class MenuBar extends React.Component {
             >
                 <div className={styles.mainMenu}>
                     <div className={styles.fileGroup}>
-                        <div className={classNames(styles.menuBarItem)}>
+                        <div
+                            className={classNames(styles.menuBarItem, styles.logoItem)}
+                            style={{padding: 0}}
+                        >
                             <img
                                 alt="Scratch"
                                 className={classNames(styles.scratchLogo, {
