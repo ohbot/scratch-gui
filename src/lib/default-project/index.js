@@ -13,6 +13,7 @@ import costume1 from '!raw-loader!./b7853f557e4426412e64bb3da6531a99.svg';
 import costume2 from '!raw-loader!./e6ddc55a6ddd9cc9d84fe0b4c21e016f.svg';
 import costume3 from '!raw-loader!./5e1f4ac0caf202c5c50cfd7297d793d7.svg';
 import costume4 from '!raw-loader!./b7853f557e4426412e64bb3da6531a92.svg';
+import costume5 from '!raw-loader!./47ec9ea875abcc265623617a3681325b.svg';
 /* eslint-enable import/no-unresolved */
 
 const defaultProject = translator => {
@@ -72,6 +73,12 @@ const defaultProject = translator => {
         dataFormat: 'SVG',
         data: encoder.encode(backdrop)
     }, {
+        id: '47ec9ea875abcc265623617a3681325b',
+        assetType: 'ImageVector',
+        dataFormat: 'SVG',
+        data: encoder.encode(costume5)
+        },
+        {
         id: 'b7853f557e4426412e64bb3da6531a99',
         assetType: 'ImageVector',
         dataFormat: 'SVG',

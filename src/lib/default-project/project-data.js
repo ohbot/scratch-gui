@@ -99,8 +99,8 @@ const projectData = translateFunction => {
                         bitmapResolution: 1,
                         md5ext: '5e1f4ac0caf202c5c50cfd7297d793d7.svg',
                         dataFormat: 'svg',
-                        rotationCenterX: 100,
-                        rotationCenterY: 110
+                        rotationCenterX: 110,
+                        rotationCenterY: 125
                     },
                     {
                         assetId: 'b7853f557e4426412e64bb3da6531a92',
@@ -108,8 +108,8 @@ const projectData = translateFunction => {
                         bitmapResolution: 1,
                         md5ext: 'b7853f557e4426412e64bb3da6531a92.svg',
                         dataFormat: 'svg',
-                        rotationCenterX: 100,
-                        rotationCenterY: 110
+                        rotationCenterX: 110,
+                        rotationCenterY: 125
                     }
                 ],
                 sounds: [
@@ -175,8 +175,17 @@ const projectData = translateFunction => {
                 currentCostume: 0,
                 costumes: [
                     {
-                        assetId: 'b7853f557e4426412e64bb3da6531a99',
+                        assetId: '47ec9ea875abcc265623617a3681325b',
                         name: translator(messages.costume, {index: 1}),
+                        bitmapResolution: 1,
+                        md5ext: '47ec9ea875abcc265623617a3681325b.svg',
+                        dataFormat: 'svg',
+                        rotationCenterX: 100,
+                        rotationCenterY: 110
+                    },
+                    {
+                        assetId: 'b7853f557e4426412e64bb3da6531a99',
+                        name: translator(messages.costume, {index: 2}),
                         bitmapResolution: 1,
                         md5ext: 'b7853f557e4426412e64bb3da6531a99.svg',
                         dataFormat: 'svg',
@@ -185,7 +194,7 @@ const projectData = translateFunction => {
                     },
                     {
                         assetId: 'e6ddc55a6ddd9cc9d84fe0b4c21e016f',
-                        name: translator(messages.costume, {index: 2}),
+                        name: translator(messages.costume, {index: 3}),
                         bitmapResolution: 1,
                         md5ext: 'e6ddc55a6ddd9cc9d84fe0b4c21e016f.svg',
                         dataFormat: 'svg',
