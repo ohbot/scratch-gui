@@ -5,7 +5,7 @@ import VM from 'scratch-vm';
 
 import styles from './simulation-controls.css';
 import robotButtonStyles from '../robot/robot-connect-button.css';
-import robotIcon from '../robot/icon--robot-nav.svg';
+import robotIcon from '../robot/icon.png';
 
 class SimulationControls extends React.Component {
     constructor (props) {
@@ -218,27 +218,24 @@ class SimulationControls extends React.Component {
                     </button>
                     {menuOpen ? (
                         <div className={robotButtonStyles.robotMenu}>
-                            <div className={robotButtonStyles.robotMenuTitleRow}>
-                                <div className={robotButtonStyles.robotMenuTitle}>{'Robot'}</div>
-                                <div className={robotButtonStyles.robotMenuState}>
-                                    {isConnecting ? 'Connecting' : connected ? robot : 'Offline'}
-                                </div>
-                            </div>
-                            <div className={robotButtonStyles.robotTopRow}>
-                                <div className={robotButtonStyles.robotMenuHeader}>
-                                    <div>
-                                        <div className={robotButtonStyles.robotMenuLabel}>{'Status'}</div>
-                                        <div className={robotButtonStyles.robotMenuValue}>
-                                            {connected ? `${robot} online` : 'Offline'}
-                                        </div>
+                            <div className={robotButtonStyles.robotMenuHero}>
+                                <div>
+                                    <div className={robotButtonStyles.robotMenuTitle}>{'Robot'}</div>
+                                    <div className={robotButtonStyles.robotMenuSubtitle}>
+                                        {connected ? robot : 'Ohbot or Picoh'}
                                     </div>
-                                    <div
+                                </div>
+                                <div className={robotButtonStyles.robotMenuState}>
+                                    <span
                                         className={[
                                             robotButtonStyles.robotStatusDot,
                                             connected ? robotButtonStyles.robotStatusDotConnected : ''
                                         ].join(' ')}
                                     />
+                                    <span>{isConnecting ? 'Connecting' : connected ? 'Online' : 'Offline'}</span>
                                 </div>
+                            </div>
+                            <div className={robotButtonStyles.robotMenuSection}>
                                 <div className={robotButtonStyles.robotConnectRow}>
                                     <button
                                         className={[
@@ -250,53 +247,55 @@ class SimulationControls extends React.Component {
                                         onClick={this.handleToggleConnection}
                                         title={connected ? 'Disconnect robot' : 'Connect robot'}
                                     >
-                                        {isConnecting ? 'Connecting...' : connected ? robot : 'Connect Robot'}
+                                        {isConnecting ? 'Connecting...' : connected ? `Disconnect ${robot}` : 'Connect Robot'}
                                     </button>
                                 </div>
                             </div>
-                            <div className={robotButtonStyles.robotMenuStats}>
-                                <div className={robotButtonStyles.robotStatCard}>
-                                    <div className={robotButtonStyles.robotMenuLabel}>{'Motors'}</div>
-                                    <div className={robotButtonStyles.robotMenuValue}>
+                            <div className={robotButtonStyles.robotMenuSection}>
+                                <div className={robotButtonStyles.robotRow}>
+                                    <div className={robotButtonStyles.robotRowLabel}>{'Motors'}</div>
+                                    <div className={robotButtonStyles.robotRowValue}>
                                         {visibleMotorIndices.length ?
-                                            `${attachedMotorCount}/${visibleMotorIndices.length} attached` :
-                                            'No data'}
+                                            `${attachedMotorCount}/${visibleMotorIndices.length}` :
+                                            '0'}
                                     </div>
                                 </div>
-                                <div className={robotButtonStyles.robotStatCard}>
-                                    <div className={robotButtonStyles.robotMenuLabel}>{'Shapes'}</div>
-                                    <div className={robotButtonStyles.robotMenuValue}>
+                                <div className={robotButtonStyles.robotRow}>
+                                    <div className={robotButtonStyles.robotRowLabel}>{'Shapes'}</div>
+                                    <div className={robotButtonStyles.robotRowValue}>
                                         {robot === 'Picoh' ? shapeCount : 'N/A'}
                                     </div>
                                 </div>
                             </div>
-                            <div className={robotButtonStyles.robotSectionHeader}>
-                                <span className={robotButtonStyles.robotMenuLabel}>{'Motors'}</span>
-                                <span className={robotButtonStyles.robotSectionMeta}>
-                                    {visibleMotorIndices.length || 0}
-                                </span>
+                            <div className={robotButtonStyles.robotMenuSection}>
+                                <div className={robotButtonStyles.robotSectionHeader}>
+                                    <span className={robotButtonStyles.robotRowLabel}>{'Channels'}</span>
+                                    <span className={robotButtonStyles.robotSectionMeta}>
+                                        {visibleMotorIndices.length || 0}
+                                    </span>
+                                </div>
+                                {visibleMotorIndices.length ? (
+                                    <div className={robotButtonStyles.robotMotorGrid}>
+                                        {visibleMotorIndices.map(index => (
+                                            <div
+                                                className={[
+                                                    robotButtonStyles.robotMotorBadge,
+                                                    isAttached[index] ?
+                                                        robotButtonStyles.robotMotorBadgeAttached :
+                                                        ''
+                                                ].join(' ')}
+                                                key={index}
+                                            >
+                                                {motorNames[index] || `Motor ${index}`}
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className={robotButtonStyles.robotEmptyState}>
+                                        {'No motors available'}
+                                    </div>
+                                )}
                             </div>
-                            {visibleMotorIndices.length ? (
-                                <div className={robotButtonStyles.robotMotorGrid}>
-                                    {visibleMotorIndices.map(index => (
-                                        <div
-                                            className={[
-                                                robotButtonStyles.robotMotorBadge,
-                                                isAttached[index] ?
-                                                    robotButtonStyles.robotMotorBadgeAttached :
-                                                    ''
-                                            ].join(' ')}
-                                            key={index}
-                                        >
-                                            {motorNames[index] || `Motor ${index}`}
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className={robotButtonStyles.robotEmptyState}>
-                                    {'No motors available'}
-                                </div>
-                            )}
                         </div>
                     ) : null}
                 </div>
