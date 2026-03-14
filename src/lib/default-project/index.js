@@ -11,7 +11,8 @@ import ohbotLoop from '!arraybuffer-loader!./loop.wav';
 import backdrop from '!raw-loader!./cd21514d0531fdffb22204e0ec5ed84a.svg';
 import costume1 from '!raw-loader!./b7853f557e4426412e64bb3da6531a99.svg';
 import costume2 from '!raw-loader!./e6ddc55a6ddd9cc9d84fe0b4c21e016f.svg';
-import costume3 from '!raw-loader!./b7853f557e4426412e64bb3da6531a92.svg';
+import costume3 from '!raw-loader!./5e1f4ac0caf202c5c50cfd7297d793d7.svg';
+import costume4 from '!raw-loader!./b7853f557e4426412e64bb3da6531a92.svg';
 /* eslint-enable import/no-unresolved */
 
 const defaultProject = translator => {
@@ -77,10 +78,16 @@ const defaultProject = translator => {
         data: encoder.encode(costume1)
         },
         {
-        id: 'b7853f557e4426412e64bb3da6531a92',
+        id: '5e1f4ac0caf202c5c50cfd7297d793d7',
         assetType: 'ImageVector',
         dataFormat: 'SVG',
         data: encoder.encode(costume3)
+        },
+        {
+        id: 'b7853f557e4426412e64bb3da6531a92',
+        assetType: 'ImageVector',
+        dataFormat: 'SVG',
+        data: encoder.encode(costume4)
         },{
         id: 'e6ddc55a6ddd9cc9d84fe0b4c21e016f',
         assetType: 'ImageVector',
